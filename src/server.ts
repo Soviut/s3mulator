@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { serve } from '@hono/node-server'
 import { config } from 'dotenv'
 import { createApp } from '@/index'
