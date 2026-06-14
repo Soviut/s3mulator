@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "A CLI S3 emulator for local development",
   "license": "MIT",
+  "engines": { "node": ">=18.3" },
+  "author": "Ian Zamojc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soviut/s3mulator.git"
+  },
+  "keywords": ["s3", "aws", "emulator", "simulator", "mock", "local", "cli", "hono"],
   "bin": {
     "s3mulator": "dist/server.js"
   },
