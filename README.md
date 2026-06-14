@@ -10,6 +10,23 @@ Supports common bucket and object operations, presigned URLs, and basic error ha
 npm install s3mulator --save-dev
 ```
 
+Then add a script to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "s3": "s3mulator",
+    "dev": "npm run s3 & npm run start"
+  }
+}
+```
+
+You can also run it directly:
+
+```bash
+npx s3mulator
+```
+
 ## Configuration
 
 | Env           | Default     | Description                           |
