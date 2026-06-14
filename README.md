@@ -29,10 +29,23 @@ npx s3mulator
 
 ## Configuration
 
-| Env           | Default     | Description                           |
-| ------------- | ----------- | ------------------------------------- |
-| `PORT`        | `5300`      | Port to listen on (53 -> S3, get it?) |
-| `S3_DATA_DIR` | `./s3-data` | Directory to store objects            |
+CLI flags take precedence over environment variables.
+
+### Flags
+
+| Flag                   | Default     | Description                |
+| ---------------------- | ----------- | -------------------------- |
+| `-p, --port <port>`    | `5300`      | Port to listen on          |
+| `-s, --storage <path>` | `./s3-data` | Directory to store objects |
+| `-q, --quiet`          |             | Suppress request logging   |
+| `-h, --help`           |             | Show help and exit         |
+
+### Environment variables
+
+| Variable     | Default     | Description                |
+| ------------ | ----------- | -------------------------- |
+| `S3_PORT`    | `5300`      | Port to listen on          |
+| `S3_STORAGE` | `./s3-data` | Directory to store objects |
 
 ## Usage
 
