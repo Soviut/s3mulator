@@ -97,34 +97,43 @@ const s3 = new S3Client({
 
 Generate a URL with the AWS SDK, then use it with any HTTP client.
 
+To upload with a presigned URL:
+
 ```ts
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
-
-// Generate a presigned download URL
-const downloadUrl = await getSignedUrl(
-  s3,
-  new GetObjectCommand({ Bucket: 'my-bucket', Key: 'photo.jpg' }),
-  { expiresIn: 3600 },
-)
-
-// Fetch the object without credentials
-const res = await fetch(downloadUrl)
-const blob = await res.blob()
+import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 // Generate a presigned upload URL
 const uploadUrl = await getSignedUrl(
   s3,
   new PutObjectCommand({ Bucket: 'my-bucket', Key: 'photo.jpg' }),
-  { expiresIn: 3600 },
+  { expiresIn: 300 }, // seconds, 5 minutes
 )
 
-// Upload without credentials
+// Upload, no AWS credentials required
 await fetch(uploadUrl, {
   method: 'PUT',
   body: file,
   headers: { 'Content-Type': 'image/jpeg' },
 })
+```
+
+To download with a presigned URL:
+
+```ts
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { GetObjectCommand } from '@aws-sdk/client-s3'
+
+// Generate a presigned download URL
+const downloadUrl = await getSignedUrl(
+  s3,
+  new GetObjectCommand({ Bucket: 'my-bucket', Key: 'photo.jpg' }),
+  { expiresIn: 300 }, // seconds, 5 minutes
+)
+
+// Fetch the object, no AWS credentials required
+const res = await fetch(downloadUrl)
+const blob = await res.blob()
 ```
 
 Presigned URLs are validated for expiry (`X-Amz-Expires`). Expired requests return `403 RequestExpired`.
