@@ -1,3 +1,5 @@
+import type { MiddlewareHandler } from 'hono'
+import type { AppEnv } from '@/context'
 import { S3ErrorCode } from '@/lib/errors'
 import { errorResponse, xmlResponse } from '@/lib/response'
 import { listResultXml } from '@/lib/xml'
@@ -5,7 +7,7 @@ import { createRouter } from '@/router'
 
 export const listRouter = createRouter()
 
-const listHandler: Parameters<typeof listRouter.get>[1] = async (c, next) => {
+const listHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (c, next) => {
   if (c.req.query('list-type') !== '2') return next()
 
   const bucket = c.req.param('bucket')

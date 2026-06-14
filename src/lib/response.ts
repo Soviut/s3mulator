@@ -1,4 +1,5 @@
 import type { Context } from 'hono'
+import type { ContentfulStatusCode } from 'hono/utils/http-status'
 import type { AppEnv } from '@/context'
 import type { S3ErrorCode } from '@/lib/errors'
 import type { ObjectMeta } from '@/lib/storage'
@@ -15,7 +16,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 }
 
 export function xmlResponse(c: AppContext, xml: string, status = 200): Response {
-  return c.body(xml, status as Parameters<AppContext['body']>[1], {
+  return c.body(xml, status as ContentfulStatusCode, {
     'Content-Type': 'application/xml',
   })
 }

@@ -1,3 +1,5 @@
+import type { MiddlewareHandler } from 'hono'
+import type { AppEnv } from '@/context'
 import { S3ErrorCode } from '@/lib/errors'
 import { errorResponse, xmlResponse } from '@/lib/response'
 import { deleteResultXml } from '@/lib/xml'
@@ -5,7 +7,7 @@ import { createRouter } from '@/router'
 
 export const batchDeleteRouter = createRouter()
 
-const batchDeleteHandler: Parameters<typeof batchDeleteRouter.post>[1] = async (c, next) => {
+const batchDeleteHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (c, next) => {
   const url = new URL(c.req.url)
   if (!url.searchParams.has('delete')) return next()
 

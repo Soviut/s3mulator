@@ -1,3 +1,5 @@
+import type { MiddlewareHandler } from 'hono'
+import type { AppEnv } from '@/context'
 import { S3ErrorCode } from '@/lib/errors'
 import { errorResponse, xmlResponse } from '@/lib/response'
 import { locationXml } from '@/lib/xml'
@@ -5,7 +7,7 @@ import { createRouter } from '@/router'
 
 export const bucketRouter = createRouter()
 
-const bucketHandler: Parameters<typeof bucketRouter.on>[2] = async (c, next) => {
+const bucketHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (c, next) => {
   const method = c.req.method
   const bucket = c.req.param('bucket')
   const url = new URL(c.req.url)

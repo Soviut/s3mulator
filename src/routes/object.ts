@@ -43,7 +43,7 @@ objectRouter.get('/:bucket/*', async (c) => {
   }
 
   setObjectHeaders(c, result.meta)
-  return c.body(result.data)
+  return c.body(new Uint8Array(result.data))
 })
 
 objectRouter.delete('/:bucket/*', async (c) => {
