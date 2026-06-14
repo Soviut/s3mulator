@@ -1,6 +1,6 @@
 {
   "name": "s3mulator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A CLI S3 emulator for local development",
   "license": "MIT",
   "engines": {
