@@ -10,6 +10,10 @@
     "url": "https://github.com/Soviut/s3mulator.git"
   },
   "keywords": ["s3", "aws", "emulator", "simulator", "mock", "local", "cli", "hono"],
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
   "bin": {
     "s3mulator": "dist/server.js"
   },
