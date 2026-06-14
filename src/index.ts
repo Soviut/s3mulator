@@ -11,17 +11,19 @@ import { requestId } from '@/middleware/request-id'
 import { batchDeleteRouter, bucketRouter, listRouter, objectRouter } from '@/routes'
 
 export interface AppConfig {
-  dataDir?: string
+  storage?: string
+  logging?: boolean
 }
 
 export function createApp(config: AppConfig = {}): Hono<AppEnv> {
-  const dataDir = config.dataDir ?? process.env.S3_DATA_DIR ?? './s3-data'
+  const dataDir = config.storage ?? process.env.S3_STORAGE ?? './s3-data'
+  const logging = config.logging ?? true
   const storage = new Storage(dataDir)
 
   const app = new Hono<AppEnv>()
 
   app.use('*', cors())
-  app.use('*', logger)
+  if (logging) app.use('*', logger)
   app.use('*', requestId)
   app.use('*', presign)
   app.use('*', async (c, next) => {

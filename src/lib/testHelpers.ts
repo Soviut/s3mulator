@@ -7,7 +7,7 @@ import { createApp } from '@/index'
 
 export function createTestApp() {
   const dataDir = mkdtempSync(join(tmpdir(), 's3-'))
-  const app = createApp({ dataDir })
+  const app = createApp({ storage: dataDir })
 
   afterEach(() => {
     rmSync(dataDir, { recursive: true, force: true })
@@ -18,7 +18,7 @@ export function createTestApp() {
 
 export function createTestServer(): Promise<string> {
   const dataDir = mkdtempSync(join(tmpdir(), 's3-'))
-  const app = createApp({ dataDir })
+  const app = createApp({ storage: dataDir })
 
   return new Promise((resolve) => {
     const server = serve({ fetch: app.fetch, port: 0 }, (info) => {
