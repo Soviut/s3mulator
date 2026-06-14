@@ -1,6 +1,8 @@
 # S3mulator
 
-An S3 emulator for local development (pronounced sem-yoo-lay-tor), built with Hono and TypeScript.
+> Pronounced "sem-yoo-lator"
+
+A CLI S3 emulator for local development.
 
 Supports common bucket and object operations, presigned URLs, and basic error handling.
 

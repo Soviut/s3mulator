@@ -1,7 +1,7 @@
 {
   "name": "s3mulator",
   "version": "1.0.0",
-  "description": "An S3 emulator for local development",
+  "description": "A CLI S3 emulator for local development",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
