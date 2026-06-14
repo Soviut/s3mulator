@@ -35,7 +35,7 @@ if (values.help) {
   process.exit(0)
 }
 
-const port = parseInt(values.port!, 10)
+const port = Number(values.port!)
 const app = createApp({ storage: values.storage, logging: !values.quiet })
 
 serve({ fetch: app.fetch, port }, () => {
