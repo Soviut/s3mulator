@@ -133,5 +133,3 @@ SigV4 signature verification is intentionally skipped.
 ```bash
 npm test
 ```
-
-Unit tests use Hono's in-process `app.request()`. Integration tests run a real server on a random port and exercise the full AWS SDK against it.
