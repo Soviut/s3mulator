@@ -5,6 +5,7 @@ import { S3ErrorCode } from '@/lib/errors'
 import { Storage } from '@/lib/storage'
 import { errorXml } from '@/lib/xml'
 import { errorHandler } from '@/middleware/error'
+import { logger } from '@/middleware/logger'
 import { presign } from '@/middleware/presign'
 import { requestId } from '@/middleware/request-id'
 import { batchDeleteRouter, bucketRouter, listRouter, objectRouter } from '@/routes'
@@ -20,6 +21,7 @@ export function createApp(config: AppConfig = {}): Hono<AppEnv> {
   const app = new Hono<AppEnv>()
 
   app.use('*', cors())
+  app.use('*', logger)
   app.use('*', requestId)
   app.use('*', presign)
   app.use('*', async (c, next) => {
