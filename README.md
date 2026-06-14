@@ -1,5 +1,9 @@
 # S3mulator
 
+[![npm version](https://img.shields.io/npm/v/s3mulator)](https://www.npmjs.com/package/s3mulator)
+[![npm downloads](https://img.shields.io/npm/dm/s3mulator)](https://www.npmjs.com/package/s3mulator)
+[![license](https://img.shields.io/npm/l/s3mulator)](./LICENSE)
+
 > Pronounced "sem-yoo-lator"
 
 A CLI S3 emulator for local development.
