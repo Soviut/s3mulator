@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 import { parseArgs } from 'node:util'
 import { serve } from '@hono/node-server'
-import { config } from 'dotenv'
 import { createApp } from '@/index'
-
-config()
 
 const { values } = parseArgs({
   options: {
