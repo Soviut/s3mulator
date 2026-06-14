@@ -1,4 +1,3 @@
 node_modules/
 dist/
 s3-data/
-*.env.local
