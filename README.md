@@ -49,6 +49,9 @@ CLI flags take precedence over environment variables.
 | `S3_PORT`    | `5300`      | Port to listen on          |
 | `S3_STORAGE` | `./s3-data` | Directory to store objects |
 
+| [!WARNING]
+| Add your storage directory to `.gitignore` to avoid committing uploaded files.
+
 ## Usage
 
 ### Client configuration
@@ -81,6 +84,14 @@ const s3 = new S3Client({
 | `DeleteObjectCommand`  | Deletes an object (idempotent — 204 even if the key does not exist) |
 | `DeleteObjectsCommand` | Deletes multiple objects in one request                             |
 | `ListObjectsV2Command` | Lists objects in a bucket; supports `Prefix` and `MaxKeys`          |
+
+### Not supported (yet)
+
+- Multipart uploads (`CreateMultipartUpload`, `UploadPart`, `CompleteMultipartUpload`)
+- Object versioning
+- Bucket lifecycle rules
+- Object tagging
+- S3 CORS configuration API (`PutBucketCors`, `GetBucketCors`)
 
 ### Presigned URLs
 
@@ -120,16 +131,10 @@ Presigned URLs are validated for expiry (`X-Amz-Expires`). Expired requests retu
 
 SigV4 signature verification is intentionally skipped.
 
-### Not Implemented
-
-- Multipart uploads (`CreateMultipartUpload`, `UploadPart`, `CompleteMultipartUpload`)
-- Object versioning
-- Bucket lifecycle rules
-- Object tagging
-- S3 CORS configuration API (`PutBucketCors`, `GetBucketCors`)
-
 ## Tests
 
 ```bash
 npm test
 ```
+
+Integration tests use the AWS SDK S3 client to perform real S3 operations against the emulator to ensure compatibility.
