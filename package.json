@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc && tsc-alias",
+    "build": "rm -rf dist && tsc && tsc-alias",
     "check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
