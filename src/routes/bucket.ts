@@ -7,7 +7,10 @@ import { createRouter } from '@/router'
 
 export const bucketRouter = createRouter()
 
-const bucketHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (c, next) => {
+const bucketHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (
+  c,
+  next,
+) => {
   const method = c.req.method
   const bucket = c.req.param('bucket')
   const url = new URL(c.req.url)

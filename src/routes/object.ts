@@ -4,7 +4,10 @@ import { createRouter } from '@/router'
 
 function extractKey(url: string, bucket: string): string {
   const pathname = new URL(url).pathname
-  return decodeURIComponent(pathname.slice(`/${bucket}/`.length)).replace(/\/$/, '')
+  return decodeURIComponent(pathname.slice(`/${bucket}/`.length)).replace(
+    /\/$/,
+    '',
+  )
 }
 
 export const objectRouter = createRouter()

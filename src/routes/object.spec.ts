@@ -8,7 +8,12 @@ describe('object routes', () => {
     await app.request(`/${name}`, { method: 'PUT' })
   }
 
-  async function putObject(bucket: string, key: string, body = 'hello', contentType = 'text/plain') {
+  async function putObject(
+    bucket: string,
+    key: string,
+    body = 'hello',
+    contentType = 'text/plain',
+  ) {
     return app.request(`/${bucket}/${key}`, {
       method: 'PUT',
       body,

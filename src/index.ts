@@ -8,7 +8,12 @@ import { errorHandler } from '@/middleware/error'
 import { logger } from '@/middleware/logger'
 import { presign } from '@/middleware/presign'
 import { requestId } from '@/middleware/request-id'
-import { batchDeleteRouter, bucketRouter, listRouter, objectRouter } from '@/routes'
+import {
+  batchDeleteRouter,
+  bucketRouter,
+  listRouter,
+  objectRouter,
+} from '@/routes'
 
 export interface AppConfig {
   storage?: string
@@ -40,7 +45,11 @@ export function createApp(config: AppConfig = {}): Hono<AppEnv> {
   app.route('/', objectRouter)
 
   app.notFound((c) => {
-    const xml = errorXml(S3ErrorCode.NoSuchKey, 'The specified key does not exist.', c.get('requestId') ?? '')
+    const xml = errorXml(
+      S3ErrorCode.NoSuchKey,
+      'The specified key does not exist.',
+      c.get('requestId') ?? '',
+    )
     return c.body(xml, 404, { 'Content-Type': 'application/xml' })
   })
 

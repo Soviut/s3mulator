@@ -7,7 +7,10 @@ import { createRouter } from '@/router'
 
 export const batchDeleteRouter = createRouter()
 
-const batchDeleteHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (c, next) => {
+const batchDeleteHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (
+  c,
+  next,
+) => {
   const url = new URL(c.req.url)
   if (!url.searchParams.has('delete')) return next()
 

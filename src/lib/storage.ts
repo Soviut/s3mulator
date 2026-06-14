@@ -41,7 +41,12 @@ export class Storage {
     mkdirSync(this.bucketPath(bucket), { recursive: true })
   }
 
-  putObject(bucket: string, key: string, data: Buffer, contentType: string): ObjectMeta {
+  putObject(
+    bucket: string,
+    key: string,
+    data: Buffer,
+    contentType: string,
+  ): ObjectMeta {
     const objectPath = this.objectPath(bucket, key)
     mkdirSync(dirname(objectPath), { recursive: true })
     writeFileSync(objectPath, data)
@@ -56,7 +61,10 @@ export class Storage {
     return meta
   }
 
-  getObject(bucket: string, key: string): { data: Buffer; meta: ObjectMeta } | null {
+  getObject(
+    bucket: string,
+    key: string,
+  ): { data: Buffer; meta: ObjectMeta } | null {
     const objectPath = this.objectPath(bucket, key)
     if (!existsSync(objectPath)) return null
     const meta = this.getMeta(bucket, key)
@@ -82,7 +90,11 @@ export class Storage {
     prefix = '',
     maxKeys = 1000,
     continuationToken?: string,
-  ): { objects: Array<{ key: string; meta: ObjectMeta }>; truncated: boolean; nextContinuationToken?: string } {
+  ): {
+    objects: Array<{ key: string; meta: ObjectMeta }>
+    truncated: boolean
+    nextContinuationToken?: string
+  } {
     const bucketPath = this.bucketPath(bucket)
     const allKeys = this.walkDir(bucketPath, bucketPath)
       .filter((k) => !k.endsWith('.meta.json'))

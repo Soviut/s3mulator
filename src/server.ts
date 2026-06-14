@@ -5,8 +5,16 @@ import { createApp } from '@/index'
 
 const { values } = parseArgs({
   options: {
-    port: { type: 'string', short: 'p', default: process.env.S3_PORT ?? '5300' },
-    storage: { type: 'string', short: 's', default: process.env.S3_STORAGE ?? './s3-data' },
+    port: {
+      type: 'string',
+      short: 'p',
+      default: process.env.S3_PORT ?? '5300',
+    },
+    storage: {
+      type: 'string',
+      short: 's',
+      default: process.env.S3_STORAGE ?? './s3-data',
+    },
     quiet: { type: 'boolean', short: 'q', default: false },
     help: { type: 'boolean', short: 'h', default: false },
   },
@@ -31,5 +39,6 @@ const port = parseInt(values.port!, 10)
 const app = createApp({ storage: values.storage, logging: !values.quiet })
 
 serve({ fetch: app.fetch, port }, () => {
-  if (!values.quiet) console.log(`S3mulator running on http://localhost:${port}`)
+  if (!values.quiet)
+    console.log(`S3mulator running on http://localhost:${port}`)
 })

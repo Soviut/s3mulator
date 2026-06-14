@@ -15,13 +15,21 @@ const ERROR_MESSAGES: Record<string, string> = {
   InternalError: 'We encountered an internal error. Please try again.',
 }
 
-export function xmlResponse(c: AppContext, xml: string, status = 200): Response {
+export function xmlResponse(
+  c: AppContext,
+  xml: string,
+  status = 200,
+): Response {
   return c.body(xml, status as ContentfulStatusCode, {
     'Content-Type': 'application/xml',
   })
 }
 
-export function errorResponse(c: AppContext, code: S3ErrorCode, status: number): Response {
+export function errorResponse(
+  c: AppContext,
+  code: S3ErrorCode,
+  status: number,
+): Response {
   const requestId = c.get('requestId') ?? ''
   const message = ERROR_MESSAGES[code] ?? 'An error occurred.'
   return xmlResponse(c, errorXml(code, message, requestId), status)

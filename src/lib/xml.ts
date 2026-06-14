@@ -30,7 +30,11 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;')
 }
 
-export function errorXml(code: string, message: string, requestId = ''): string {
+export function errorXml(
+  code: string,
+  message: string,
+  requestId = '',
+): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <Error>
   <Code>${escapeXml(code)}</Code>
@@ -73,7 +77,10 @@ ${nextToken}${contents}
 </ListBucketResult>`
 }
 
-export function deleteResultXml(deleted: DeletedObject[], errors: DeleteError[]): string {
+export function deleteResultXml(
+  deleted: DeletedObject[],
+  errors: DeleteError[],
+): string {
   const deletedXml = deleted
     .map(
       (d) => `  <Deleted>

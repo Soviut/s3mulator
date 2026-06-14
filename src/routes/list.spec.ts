@@ -52,9 +52,13 @@ describe('list routes', () => {
     await putObject('lb4', 'b.txt')
     const first = await app.request('/lb4?list-type=2&max-keys=1')
     const firstBody = await first.text()
-    const token = firstBody.match(/<NextContinuationToken>([^<]+)<\/NextContinuationToken>/)?.[1]
+    const token = firstBody.match(
+      /<NextContinuationToken>([^<]+)<\/NextContinuationToken>/,
+    )?.[1]
     expect(token).toBeTruthy()
-    const second = await app.request(`/lb4?list-type=2&continuation-token=${token}`)
+    const second = await app.request(
+      `/lb4?list-type=2&continuation-token=${token}`,
+    )
     const secondBody = await second.text()
     expect(secondBody).toContain('<Key>b.txt</Key>')
     expect(secondBody).toContain('<IsTruncated>false</IsTruncated>')
