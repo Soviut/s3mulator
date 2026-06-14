@@ -53,8 +53,8 @@ CLI flags take precedence over environment variables.
 | `S3_PORT`    | `5300`      | Port to listen on          |
 | `S3_STORAGE` | `./s3-data` | Directory to store objects |
 
-| [!WARNING]
-| Add your storage directory to `.gitignore` to avoid committing uploaded files.
+> [!WARNING]
+> Add your storage directory to `.gitignore` to avoid committing uploaded files.
 
 ## Usage
 
