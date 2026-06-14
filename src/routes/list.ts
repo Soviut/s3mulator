@@ -18,7 +18,7 @@ const listHandler: MiddlewareHandler<AppEnv, '/:bucket'> = async (c, next) => {
   }
 
   const prefix = c.req.query('prefix') ?? ''
-  const maxKeys = parseInt(c.req.query('max-keys') ?? '1000', 10)
+  const maxKeys = Number(c.req.query('max-keys') ?? '1000')
   const continuationToken = c.req.query('continuation-token')
 
   const { objects, truncated, nextContinuationToken } = storage.listObjects(

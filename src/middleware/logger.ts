@@ -29,7 +29,7 @@ export const logger: MiddlewareHandler<AppEnv> = async (c, next) => {
   let size: number | null = null
   if (method === 'PUT') {
     const cl = c.req.header('content-length')
-    if (cl) size = parseInt(cl, 10)
+    if (cl) size = Number(cl)
   }
 
   await next()
@@ -37,7 +37,7 @@ export const logger: MiddlewareHandler<AppEnv> = async (c, next) => {
   // Capture GET response size after handler sets Content-Length
   if (method === 'GET') {
     const cl = c.res.headers.get('content-length')
-    if (cl) size = parseInt(cl, 10)
+    if (cl) size = Number(cl)
   }
 
   const { pathname, search } = new URL(c.req.url)
