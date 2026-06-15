@@ -1,4 +1,4 @@
-import type { Storage } from '@/lib/storage'
+import type { Storage } from '@/storage'
 
 export type AppEnv = {
   Bindings: {

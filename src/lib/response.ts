@@ -2,7 +2,7 @@ import type { Context } from 'hono'
 import type { ContentfulStatusCode } from 'hono/utils/http-status'
 import type { AppEnv } from '@/context'
 import type { S3ErrorCode } from '@/lib/errors'
-import type { ObjectMeta } from '@/lib/storage'
+import type { ObjectMeta } from '@/storage'
 import { errorXml } from '@/lib/xml'
 
 type AppContext = Context<AppEnv>
