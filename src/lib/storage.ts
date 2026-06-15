@@ -17,7 +17,23 @@ export interface ObjectMeta {
   lastModified: string
 }
 
-export class Storage {
+export type ListResult = {
+  objects: Array<{ key: string; meta: ObjectMeta }>
+  truncated: boolean
+  nextContinuationToken?: string
+}
+
+export interface Storage {
+  bucketExists(bucket: string): boolean
+  createBucket(bucket: string): void
+  putObject(bucket: string, key: string, data: Buffer, contentType: string): ObjectMeta
+  getObject(bucket: string, key: string): { data: Buffer; meta: ObjectMeta } | null
+  getMeta(bucket: string, key: string): ObjectMeta | null
+  deleteObject(bucket: string, key: string): void
+  listObjects(bucket: string, prefix?: string, maxKeys?: number, continuationToken?: string): ListResult
+}
+
+export class DiskStorage implements Storage {
   constructor(private readonly dataDir: string) {}
 
   bucketPath(bucket: string): string {
@@ -41,12 +57,7 @@ export class Storage {
     mkdirSync(this.bucketPath(bucket), { recursive: true })
   }
 
-  putObject(
-    bucket: string,
-    key: string,
-    data: Buffer,
-    contentType: string,
-  ): ObjectMeta {
+  putObject(bucket: string, key: string, data: Buffer, contentType: string): ObjectMeta {
     const objectPath = this.objectPath(bucket, key)
     mkdirSync(dirname(objectPath), { recursive: true })
     writeFileSync(objectPath, data)
@@ -61,10 +72,7 @@ export class Storage {
     return meta
   }
 
-  getObject(
-    bucket: string,
-    key: string,
-  ): { data: Buffer; meta: ObjectMeta } | null {
+  getObject(bucket: string, key: string): { data: Buffer; meta: ObjectMeta } | null {
     const objectPath = this.objectPath(bucket, key)
     if (!existsSync(objectPath)) return null
     const meta = this.getMeta(bucket, key)
@@ -85,16 +93,7 @@ export class Storage {
     if (existsSync(mp)) unlinkSync(mp)
   }
 
-  listObjects(
-    bucket: string,
-    prefix = '',
-    maxKeys = 1000,
-    continuationToken?: string,
-  ): {
-    objects: Array<{ key: string; meta: ObjectMeta }>
-    truncated: boolean
-    nextContinuationToken?: string
-  } {
+  listObjects(bucket: string, prefix = '', maxKeys = 1000, continuationToken?: string): ListResult {
     const bucketPath = this.bucketPath(bucket)
     const allKeys = this.walkDir(bucketPath, bucketPath)
       .filter((k) => !k.endsWith('.meta.json'))
