@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import type { AppEnv } from '@/context'
 import { S3ErrorCode } from '@/lib/errors'
+import type { Storage } from '@/storage'
 import { DiskStorage } from '@/storage/disk'
 import { errorXml } from '@/lib/xml'
 import { errorHandler } from '@/middleware/error'
@@ -16,14 +17,16 @@ import {
 } from '@/routes'
 
 export interface AppConfig {
-  storage?: string
+  storage?: string | Storage
   logging?: boolean
 }
 
 export function createApp(config: AppConfig = {}): Hono<AppEnv> {
-  const dataDir = config.storage ?? process.env.S3_STORAGE ?? './s3-data'
   const logging = config.logging ?? true
-  const storage = new DiskStorage(dataDir)
+  const storage =
+    typeof config.storage === 'object'
+      ? config.storage
+      : new DiskStorage(config.storage ?? process.env.S3_STORAGE ?? './s3-data')
 
   const app = new Hono<AppEnv>()
 

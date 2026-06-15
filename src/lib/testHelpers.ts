@@ -1,31 +1,18 @@
-import { mkdtempSync, rmSync } from 'fs'
-import { tmpdir } from 'os'
-import { join } from 'path'
-import { afterAll, afterEach } from 'vitest'
+import { afterAll } from 'vitest'
 import { serve } from '@hono/node-server'
 import { createApp } from '@/index'
+import { MemoryStorage } from '@/storage/memory'
 
 export function createTestApp() {
-  const dataDir = mkdtempSync(join(tmpdir(), 's3-'))
-  const app = createApp({ storage: dataDir, logging: false })
-
-  afterEach(() => {
-    rmSync(dataDir, { recursive: true, force: true })
-  })
-
-  return app
+  return createApp({ storage: new MemoryStorage(), logging: false })
 }
 
 export function createTestServer(): Promise<string> {
-  const dataDir = mkdtempSync(join(tmpdir(), 's3-'))
-  const app = createApp({ storage: dataDir, logging: false })
+  const app = createApp({ storage: new MemoryStorage(), logging: false })
 
   return new Promise((resolve) => {
     const server = serve({ fetch: app.fetch, port: 0 }, (info) => {
-      afterAll(() => {
-        server.close()
-        rmSync(dataDir, { recursive: true, force: true })
-      })
+      afterAll(() => server.close())
       resolve(`http://localhost:${info.port}`)
     })
   })
