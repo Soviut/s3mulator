@@ -39,19 +39,23 @@ CLI flags take precedence over environment variables.
 
 ### Flags
 
-| Flag                   | Default     | Description                |
-| ---------------------- | ----------- | -------------------------- |
-| `-p, --port <port>`    | `5300`      | Port to listen on          |
-| `-s, --storage <path>` | `./s3-data` | Directory to store objects |
-| `-q, --quiet`          |             | Suppress request logging   |
-| `-h, --help`           |             | Show help and exit         |
+| Flag                   | Default     | Description                                      |
+| ---------------------- | ----------- | ------------------------------------------------ |
+| `-p, --port <port>`    | `5300`      | Port to listen on                                |
+| `-s, --storage <path>` | `./s3-data` | Directory to store objects                       |
+| `-m, --memory`         |             | Store objects in memory (lost on restart)        |
+| `-q, --quiet`          |             | Suppress request logging                         |
+| `-h, --help`           |             | Show help and exit                               |
+
+`--storage` and `--memory` are mutually exclusive.
 
 ### Environment variables
 
-| Variable     | Default     | Description                |
-| ------------ | ----------- | -------------------------- |
-| `S3_PORT`    | `5300`      | Port to listen on          |
-| `S3_STORAGE` | `./s3-data` | Directory to store objects |
+| Variable      | Default     | Description                              |
+| ------------- | ----------- | ---------------------------------------- |
+| `S3_PORT`     | `5300`      | Port to listen on                        |
+| `S3_STORAGE`  | `./s3-data` | Directory to store objects               |
+| `S3_MEMORY`   | `false`     | Set to `true` to use in-memory storage   |
 
 > [!WARNING]
 > Add your storage directory to `.gitignore` to avoid committing uploaded files.
